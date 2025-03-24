@@ -4,8 +4,17 @@
     <string name="price">Amount</string>
     <string name="range">Number of day/month</string>
     <string name="desc_app">Just-Budgetin will calculate the target amount of money you will achieve on the desired day/month.</string>
-    <string name="accumulated_money">Accumulated money</string>
+    <string name="accumulated_money">Accumulated money: Rp %1$.2f</string>
     <string name="share">Share</string>
     <string name="share_template">Share_template</string>
     <string name="label">label</string>
+    <string-array name="Accumulated_days">
+        <item>1 week</item>
+        <item>2 week</item>
+        <item>1 Month</item>
+        <item>3 Month</item>
+        <item>6 Month</item>
+        <item>1 Year</item>
+        <item>3 Year</item>
+    </string-array>
 </resources>

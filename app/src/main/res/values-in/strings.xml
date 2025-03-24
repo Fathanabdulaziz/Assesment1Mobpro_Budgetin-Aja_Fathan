@@ -9,4 +9,13 @@
     <string name="share">Bagikan</string>
     <string name="share_template">Bagikan_template</string>
     <string name="label">label</string>
+    <string-array name="Accumulated_days">
+        <item>1 Minggu</item>
+        <item>2 Minggu</item>
+        <item>1 Bulan</item>
+        <item>3 Bulan</item>
+        <item>6 Bulan</item>
+        <item>1 Tahun</item>
+        <item>3 Tahun</item>
+    </string-array>
 </resources>
