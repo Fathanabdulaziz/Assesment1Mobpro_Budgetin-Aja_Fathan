@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Just-Budget</string>
+    <string name="about_app">This application is designed to calculate the predicted amount of money that will be saved within a desired timeframe. It helps users easily determine the total savings accumulated over a specific period.\\n\\nThis application is developed for Assessment 1 in the Mobile Programming 1 course.\\n\\nCopyright © 2025–2026 Fathan Abdul Aziz.\\nAll rights reserved.</string>
+    <string name="price">Amount</string>
+    <string name="range">Number of day/month</string>
+    <string name="desc_app">Just-Budgetin will calculate the target amount of money you will achieve on the desired day/month.</string>
+    <string name="accumulated_money">Accumulated money</string>
 </resources>
