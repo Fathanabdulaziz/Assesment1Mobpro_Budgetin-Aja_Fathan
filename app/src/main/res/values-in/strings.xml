@@ -6,4 +6,6 @@
     <string name="range">jumlah hari/bulan</string>
     <string name="desc_app">budgetin aja akan menghitung target uang yang dicapai pada hari/bulan yang kamu inginkan</string>
     <string name="accumulated_money">uang terakumlasi: Rp %1$.2f</string>
+    <string name="share">Bagikan</string>
+    <string name="share_template">Bagikan_template</string>
 </resources>
