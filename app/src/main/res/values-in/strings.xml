@@ -8,4 +8,5 @@
     <string name="accumulated_money">uang terakumlasi: Rp %1$.2f</string>
     <string name="share">Bagikan</string>
     <string name="share_template">Bagikan_template</string>
+    <string name="label">label</string>
 </resources>

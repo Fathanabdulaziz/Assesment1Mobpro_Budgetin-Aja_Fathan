@@ -7,4 +7,5 @@
     <string name="accumulated_money">Accumulated money</string>
     <string name="share">Share</string>
     <string name="share_template">Share_template</string>
+    <string name="label">label</string>
 </resources>
