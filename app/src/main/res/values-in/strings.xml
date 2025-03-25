@@ -3,19 +3,11 @@
     <string name="app_name">Budgetin-Aja</string>
     <string name="about_app">aplikasi ini adalah aplikasi menghitung prediksi uang yang akan di tabung dengan waktu yang diinginkan, aplikasi ini memudahkan anda untuk mengetahui uang yang terkumpul pada waktu yang diinginkan. \\n\\naplikasi ini dibuat untuk assesment 1 mata kuliah Pemrograman untuk perangkat bergerak 1. \\n\\nCopyright © 2025–2026 Fathan Abdul Aziz.\\nAll rights reserved.</string>
     <string name="price">Jumlah uang</string>
-    <string name="range">jumlah hari/bulan</string>
+    <string name="range">jarak antara Minggu/bulan/Tahun</string>
     <string name="desc_app">budgetin aja akan menghitung target uang yang dicapai pada hari/bulan yang kamu inginkan</string>
     <string name="accumulated_money">uang terakumlasi: Rp %1$.2f</string>
     <string name="share">Bagikan</string>
     <string name="share_template">Bagikan_template</string>
     <string name="label">label</string>
-    <string-array name="Accumulated_days">
-        <item>1 Minggu</item>
-        <item>2 Minggu</item>
-        <item>1 Bulan</item>
-        <item>3 Bulan</item>
-        <item>6 Bulan</item>
-        <item>1 Tahun</item>
-        <item>3 Tahun</item>
-    </string-array>
+    <string name="desc_range">Pilihan anda: %s</string>
 </resources>
