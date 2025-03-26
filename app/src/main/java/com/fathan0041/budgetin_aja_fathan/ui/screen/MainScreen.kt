@@ -3,6 +3,7 @@ package com.fathan0041.budgetin_aja_fathan.ui.screen
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -24,6 +26,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -58,8 +61,14 @@ fun MainScreen(){
 }
 @Composable
 fun ScreenContent (modifier: Modifier = Modifier){
-    var name by remember { mutableStateOf("") }
-    var price by remember { mutableStateOf("") }
+    var label by remember { mutableStateOf("") }
+    var labelError by remember { mutableStateOf(false) }
+    var amount by remember { mutableStateOf("") }
+    var amountError by remember { mutableStateOf(false) }
+    var duration by remember { mutableStateOf("") }
+    var durationError by remember { mutableStateOf(false)}
+        var budget by remember { mutableIntStateOf(0)}
+
     Column (
         modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -71,8 +80,8 @@ fun ScreenContent (modifier: Modifier = Modifier){
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
-            value = name,
-            onValueChange = { name = it},
+            value = label,
+            onValueChange = { label = it},
             label = {
                 Text(
                     text = stringResource(R.string.label)
@@ -86,8 +95,8 @@ fun ScreenContent (modifier: Modifier = Modifier){
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
-            value = price,
-            onValueChange = { price = it},
+            value = amount,
+            onValueChange = { amount = it},
             label = {
                 Text(
                     text = stringResource(R.string.price)
@@ -101,7 +110,7 @@ fun ScreenContent (modifier: Modifier = Modifier){
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Done
+                imeAction = ImeAction.Next
             ),
             modifier = Modifier.fillMaxWidth()
         )
@@ -111,7 +120,48 @@ fun ScreenContent (modifier: Modifier = Modifier){
         ) {
             DropDown()
         }
+        Column (
+            modifier = Modifier.fillMaxSize()
+        ){
+            OutlinedTextField(
+                value = duration,
+                onValueChange = { duration = it},
+                label = {
+                    Text(
+                        text = stringResource(R.string.duration)
+                    )
+                },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
+                ),
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+        Row (
+            modifier = Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Button(
+                onClick ={
+                    labelError = (label == "" || label =="-")
+                    amountError =(amount == "" || amount == "0")
+                    durationError =(duration == "" || duration == "0")
 
+                    if (labelError|| amountError || durationError) return@Button
+                    budget = hitungBudget(amount.toInt(),duration.toInt())
+
+                },
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.count)
+                )
+            }
+        }
     }
 }
 
@@ -119,11 +169,10 @@ fun ScreenContent (modifier: Modifier = Modifier){
 @Composable
 fun DropDown(){
     val list = listOf(
-        "1 week",
-        "1 Month",
-        "6 Month",
-        "1 Year",
-        "3 Year"
+        "Days",
+        "Week",
+        "Month",
+        "Year"
     )
     var selectedText by remember { mutableStateOf(list[0]) }
     var isExpanded by remember { mutableStateOf(false) }
@@ -157,10 +206,11 @@ fun DropDown(){
                 }
             }
         }
-        Text(
-            text = stringResource(R.string.desc_range, selectedText)
-        )
     }
+}
+
+private fun hitungBudget (amount: Int, duration: Int) : Int {
+    return amount * duration
 }
 
 @Preview(showBackground = true)
