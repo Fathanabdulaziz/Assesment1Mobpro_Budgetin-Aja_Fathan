@@ -11,11 +11,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
@@ -26,7 +30,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -56,7 +60,7 @@ fun MainScreen(){
             )
         }
     ) { innerPadding ->
-        ScreenContent(Modifier.padding(innerPadding).padding(12.dp))
+        ScreenContent(Modifier.padding(innerPadding).padding(8.dp))
     }
 }
 @Composable
@@ -67,7 +71,7 @@ fun ScreenContent (modifier: Modifier = Modifier){
     var amountError by remember { mutableStateOf(false) }
     var duration by remember { mutableStateOf("") }
     var durationError by remember { mutableStateOf(false)}
-        var budget by remember { mutableIntStateOf(0)}
+    var budget by remember { mutableFloatStateOf(0f)}
 
     Column (
         modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
@@ -87,6 +91,8 @@ fun ScreenContent (modifier: Modifier = Modifier){
                     text = stringResource(R.string.label)
                 )
             },
+            trailingIcon = { IconPicker(labelError) },
+            supportingText = { ErrorHint(labelError) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
@@ -107,6 +113,8 @@ fun ScreenContent (modifier: Modifier = Modifier){
                     text = "Rp"
                 )
             },
+            trailingIcon = { IconPicker(amountError) },
+            supportingText = { ErrorHint(amountError) },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -131,6 +139,8 @@ fun ScreenContent (modifier: Modifier = Modifier){
                         text = stringResource(R.string.duration)
                     )
                 },
+                trailingIcon = { IconPicker(durationError) },
+                supportingText = { ErrorHint(durationError) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
@@ -139,19 +149,14 @@ fun ScreenContent (modifier: Modifier = Modifier){
                 modifier = Modifier.fillMaxWidth()
             )
         }
-        Row (
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ){
             Button(
                 onClick ={
                     labelError = (label == "" || label =="-")
-                    amountError =(amount == "" || amount == "0")
+                    amountError =(amount == "" || amount == "0" || amount == ".")
                     durationError =(duration == "" || duration == "0")
 
                     if (labelError|| amountError || durationError) return@Button
-                    budget = hitungBudget(amount.toInt(),duration.toInt())
+                    budget = countBudget(amount.toFloat(),duration.toFloat())
 
                 },
                 modifier = Modifier.padding(top = 8.dp),
@@ -161,9 +166,18 @@ fun ScreenContent (modifier: Modifier = Modifier){
                     text = stringResource(R.string.count)
                 )
             }
+            if (budget != 0f){
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = 1.dp),
+                    thickness = 1.dp
+                )
+                Text(
+                    text = stringResource(R.string.accumulated_money,budget),
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
         }
     }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -209,7 +223,21 @@ fun DropDown(){
     }
 }
 
-private fun hitungBudget (amount: Int, duration: Int) : Int {
+@Composable
+fun IconPicker(isError: Boolean){
+    if(isError){
+        Icon(imageVector = Icons.Filled.Warning, contentDescription = null)
+    }
+}
+
+@Composable
+fun ErrorHint (isError: Boolean){
+    if (isError){
+        Text(text = stringResource(R.string.input_invalid))
+    }
+}
+
+private fun countBudget (amount: Float, duration: Float) : Float {
     return amount * duration
 }
 
