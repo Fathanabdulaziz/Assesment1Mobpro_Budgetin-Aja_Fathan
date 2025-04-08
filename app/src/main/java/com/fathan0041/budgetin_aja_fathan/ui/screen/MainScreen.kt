@@ -1,6 +1,7 @@
 package com.fathan0041.budgetin_aja_fathan.ui.screen
 
 import android.content.res.Configuration
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -33,11 +35,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -46,12 +51,17 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.fathan0041.budgetin_aja_fathan.R
+import com.fathan0041.budgetin_aja_fathan.model.Uang
 import com.fathan0041.budgetin_aja_fathan.navigation.Screen
 import com.fathan0041.budgetin_aja_fathan.ui.theme.BudgetinAja_FathanTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController){
+    val data = listOf(
+        Uang(stringResource(R.string.money) , R.drawable.money_manage),
+    )
+    val index by remember { mutableIntStateOf(0) }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -76,11 +86,11 @@ fun MainScreen(navController: NavHostController){
             )
         }
     ) { innerPadding ->
-        ScreenContent(Modifier.padding(innerPadding).padding(8.dp))
+        ScreenContent(data[index],Modifier.padding(innerPadding).padding(8.dp))
     }
 }
 @Composable
-fun ScreenContent (modifier: Modifier = Modifier){
+fun ScreenContent (uang: Uang,modifier: Modifier = Modifier){
     var label by remember { mutableStateOf("") }
     var labelError by remember { mutableStateOf(false) }
     var amount by remember { mutableStateOf("") }
@@ -94,6 +104,12 @@ fun ScreenContent (modifier: Modifier = Modifier){
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        Image(
+            painter = painterResource(id = uang.imageResId),
+            contentDescription = stringResource(R.string.image, uang.nama),
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.size(132.dp)
+        )
         Text(
             text = stringResource(R.string.desc_app),
             style = MaterialTheme.typography.bodyLarge,

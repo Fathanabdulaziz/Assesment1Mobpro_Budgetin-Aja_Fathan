@@ -15,4 +15,6 @@
     <string name="input_invalid">Tidak boleh kosong.</string>
     <string name="back">Kembali</string>
     <string name="about_app">Tentang Aplikasi</string>
+    <string name="money">Uang</string>
+    <string name="image">Gambar %1$s</string>
 </resources>
