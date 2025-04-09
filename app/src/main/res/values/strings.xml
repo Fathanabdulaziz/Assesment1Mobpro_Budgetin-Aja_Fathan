@@ -1,19 +1,20 @@
 <resources>
     <string name="app_name">Just-Budget</string>
     <string name="copyright">This application is designed to calculate the predicted amount of money that will be saved within a desired timeframe. It helps users easily determine the total savings accumulated over a specific period.\n\nThis application is developed for Assessment 1 in the Mobile Programming 1 course.\n\nCopyright © 2025–2026 Fathan Abdul Aziz.\nAll rights reserved.</string>
-    <string name="price">Amount</string>
-    <string name="range">Range of Week/Month/Year</string>
-    <string name="desc_app">Just-Budgetin will calculate the target amount of money you will achieve on the desired week/month/year.</string>
-    <string name="accumulated_money">Accumulated money: \nRp %1$.0f</string>
+    <string name="price">Target money</string>
+    <string name="range">Range of Day/Week/Month/Year</string>
+    <string name="desc_app">Just-Budgetin will calculate the target amount of money you will achieve on the desired day/week/month/year.</string>
+    <string name="accumulated_money">Money/day: %1$s</string>
     <string name="share">Share</string>
-    <string name="share_template">Share_template</string>
-    <string name="label">label</string>
+    <string name="share_template">Name : %1$s \nSelected Range: %2$s \nDuration: %3$s \nTarget money: Rp %4$s\nMoney/day: %5$s</string>
+    <string name="label">Name</string>
     <string name="desc_range">Currently Selected : %s</string>
     <string name="count">Count</string>
     <string name="duration">Duration day/week/month/year</string>
-    <string name="input_invalid">Input Invalid</string>
+    <string name="input_invalid">Input Invalid.</string>
     <string name="back">Back</string>
     <string name="about_app">About App</string>
     <string name="money">Money</string>
     <string name="image">Image %1$s</string>
+    <string name="label_display">Name: %s</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.fathan0041.budgetin_aja_fathan.ui.screen
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -42,6 +44,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -54,6 +57,8 @@ import com.fathan0041.budgetin_aja_fathan.R
 import com.fathan0041.budgetin_aja_fathan.model.Uang
 import com.fathan0041.budgetin_aja_fathan.navigation.Screen
 import com.fathan0041.budgetin_aja_fathan.ui.theme.BudgetinAja_FathanTheme
+import java.text.NumberFormat
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,11 +98,14 @@ fun MainScreen(navController: NavHostController){
 fun ScreenContent (uang: Uang,modifier: Modifier = Modifier){
     var label by remember { mutableStateOf("") }
     var labelError by remember { mutableStateOf(false) }
+    var labelDisplay by remember { mutableStateOf("") }
     var amount by remember { mutableStateOf("") }
     var amountError by remember { mutableStateOf(false) }
     var duration by remember { mutableStateOf("") }
     var durationError by remember { mutableStateOf(false)}
     var budget by remember { mutableFloatStateOf(0f)}
+    var selectedRange by remember { mutableStateOf("Days") }
+    val context = LocalContext.current
 
     Column (
         modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
@@ -146,7 +154,14 @@ fun ScreenContent (uang: Uang,modifier: Modifier = Modifier){
                 )
             },
             trailingIcon = { IconPicker(amountError) },
-            supportingText = { ErrorHint(amountError) },
+            supportingText = {
+                Column {
+                    ErrorHint(amountError)
+                    if (amount.toFloatOrNull() != null) {
+                        Text("Target: Rp ${formatNumber(amount.toFloat())}")
+                    }
+                }
+            },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -158,7 +173,7 @@ fun ScreenContent (uang: Uang,modifier: Modifier = Modifier){
             modifier = Modifier
                 .padding(top = 6.dp)
         ) {
-            DropDown()
+            DropDown(selectedText = selectedRange, onSelectionChange = { selectedRange = it })
         }
         Column (
             modifier = Modifier.fillMaxSize()
@@ -188,7 +203,8 @@ fun ScreenContent (uang: Uang,modifier: Modifier = Modifier){
                     durationError =(duration == "" || duration == "0")
 
                     if (labelError|| amountError || durationError) return@Button
-                    budget = countBudget(amount.toFloat(),duration.toFloat())
+                    labelDisplay = label
+                    budget = calculateBudgetByRange(amount.toFloat(), duration.toFloat(), selectedRange)
 
                 },
                 modifier = Modifier.padding(top = 8.dp),
@@ -204,23 +220,44 @@ fun ScreenContent (uang: Uang,modifier: Modifier = Modifier){
                     thickness = 1.dp
                 )
                 Text(
-                    text = stringResource(R.string.accumulated_money,budget),
+                    text = stringResource(R.string.label_display, labelDisplay),
                     style = MaterialTheme.typography.titleLarge
                 )
+                Text(
+                    text = stringResource(R.string.accumulated_money,"Rp ${formatNumber(budget)}" ),
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Button(
+                    onClick = { shareData(
+                        context = context,
+                        message = context.getString(
+                            R.string.share_template,
+                            label,
+                            selectedRange,
+                            duration,
+                            amount,
+                            "Rp ${formatNumber(budget)}"
+                        )
+                    )
+                              },
+                    modifier = Modifier.padding(top = 8.dp),
+                    contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+                ) {
+                    Text(text = stringResource(R.string.share))
+                }
             }
         }
     }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DropDown(){
+fun DropDown(selectedText: String, onSelectionChange: (String) -> Unit){
     val list = listOf(
         "Days",
         "Week",
         "Month",
         "Year"
     )
-    var selectedText by remember { mutableStateOf(list[0]) }
     var isExpanded by remember { mutableStateOf(false) }
     Column (
         modifier = Modifier
@@ -240,11 +277,10 @@ fun DropDown(){
                 modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
             )
             ExposedDropdownMenu(expanded = isExpanded, onDismissRequest = {isExpanded = false}) {
-                list.forEachIndexed{index, text ->
+                list.forEach{ text ->
                     DropdownMenuItem(
                         text = { Text(text = text) },
-                        onClick = {
-                         selectedText = list[index]
+                        onClick = {onSelectionChange(text)
                          isExpanded = false
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
@@ -253,6 +289,11 @@ fun DropDown(){
             }
         }
     }
+}
+
+fun formatNumber(number: Float): String {
+    val formatter = NumberFormat.getInstance(Locale("id", "ID"))
+    return formatter.format(number)
 }
 
 @Composable
@@ -269,8 +310,24 @@ fun ErrorHint (isError: Boolean){
     }
 }
 
-private fun countBudget (amount: Float, duration: Float) : Float {
-    return amount * duration
+private fun calculateBudgetByRange(amount: Float, duration: Float, range: String): Float {
+    return when (range) {
+        "Days" -> amount / duration
+        "Week" -> amount / (duration * 7)
+        "Month" -> amount / (duration * 30)
+        "Year" -> amount / (duration * 365)
+        else -> 0f
+    }
+}
+
+private fun shareData(context: Context, message: String){
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, message)
+    }
+    if (shareIntent.resolveActivity(context.packageManager) !=null){
+        context.startActivity(shareIntent)
+    }
 }
 
 @Preview(showBackground = true)
