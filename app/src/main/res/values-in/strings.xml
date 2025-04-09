@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Budgetin-Aja</string>
-    <string name="copyright">aplikasi ini adalah aplikasi menghitung prediksi uang yang akan di tabung dengan waktu yang diinginkan, aplikasi ini memudahkan anda untuk mengetahui uang yang terkumpul pada waktu yang diinginkan. \n\naplikasi ini dibuat untuk assesment 1 mata kuliah Pemrograman untuk perangkat bergerak 1. \n\nCopyright © 2025–2026 Fathan Abdul Aziz.\nAll rights reserved.</string>
+    <string name="copyright">aplikasi ini adalah aplikasi menghitung uang sesuai dengan target yang diinginkan oleh pengguna perhari yang dia ingin kumpulkan untuk mencapai target tersebut, aplikasi ini memudahkan anda untuk mengetahui uang yang terkumpul pada target yang anda inginkan perharinya butuh berapa rupiah agar pas dengan yang target uang yang ingin dikumpulkan.\naplikasi ini dibuat untuk assesment 1 mata kuliah Pemrograman untuk perangkat bergerak 1. \n\nCopyright © 2025–2026 Fathan Abdul Aziz. All rights reserved.</string>
     <string name="price">Target uang</string>
     <string name="range">jarak antara Hari/Minggu/bulan/Tahun</string>
-    <string name="desc_app">" Budgetin aja akan menghitung target uang perharinya yang ingin dicapai pada tujuan hari/minggu/bulan/tahun yang kamu inginkan"</string>
+    <string name="desc_app">Budgetin aja akan menghitung target uang perharinya yang ingin dicapai pada tujuan hari/minggu/bulan/tahun yang kamu inginkan</string>
     <string name="accumulated_money">Uang/hari %1$s</string>
     <string name="share">Bagikan</string>
     <string name="share_template">Nama : %1$s \nPilihan Waktu: %2$s \nDurasi: %3$s\nTarget uang: %4$s\nUang/hari: %5$s</string>

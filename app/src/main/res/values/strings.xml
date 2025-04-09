@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Just-Budget</string>
-    <string name="copyright">This application is designed to calculate the predicted amount of money that will be saved within a desired timeframe. It helps users easily determine the total savings accumulated over a specific period.\n\nThis application is developed for Assessment 1 in the Mobile Programming 1 course.\n\nCopyright © 2025–2026 Fathan Abdul Aziz.\nAll rights reserved.</string>
+    <string name="app_name">Budgetin-Aja</string>
+    <string name="copyright">This app helps you calculate how much money you need to set aside each day to reach your financial goal. Just set your target amount and the time frame, and Budgetin Aja will tell you how much you should save daily to hit that goal right on time. Super handy for tracking your savings progress in a simple way.\nThis application is developed for Assessment 1 in the Mobile Programming 1 course. \n\nCopyright © 2025–2026 Fathan Abdul Aziz. All rights reserved.</string>
     <string name="price">Target money</string>
     <string name="range">Range of Day/Week/Month/Year</string>
-    <string name="desc_app">Just-Budgetin will calculate the target amount of money you will achieve on the desired day/week/month/year.</string>
+    <string name="desc_app">Budgetin Aja shows you how much you need to save or earn per day to hit your money goal—whether it’s just for today, this week, the month, or the whole year.</string>
     <string name="accumulated_money">Money/day: %1$s</string>
     <string name="share">Share</string>
     <string name="share_template">Name : %1$s \nSelected Range: %2$s \nDuration: %3$s \nTarget money: Rp %4$s\nMoney/day: %5$s</string>
