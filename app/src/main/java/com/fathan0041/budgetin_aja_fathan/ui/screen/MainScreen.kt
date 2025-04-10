@@ -40,6 +40,7 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -96,15 +97,15 @@ fun MainScreen(navController: NavHostController){
 }
 @Composable
 fun ScreenContent (uang: Uang,modifier: Modifier = Modifier){
-    var label by remember { mutableStateOf("") }
-    var labelError by remember { mutableStateOf(false) }
-    var labelDisplay by remember { mutableStateOf("") }
-    var amount by remember { mutableStateOf("") }
-    var amountError by remember { mutableStateOf(false) }
-    var duration by remember { mutableStateOf("") }
-    var durationError by remember { mutableStateOf(false)}
-    var budget by remember { mutableFloatStateOf(0f)}
-    var selectedRange by remember { mutableStateOf("Days") }
+    var label by rememberSaveable { mutableStateOf("") }
+    var labelError by rememberSaveable { mutableStateOf(false) }
+    var labelDisplay by rememberSaveable { mutableStateOf("") }
+    var amount by rememberSaveable { mutableStateOf("") }
+    var amountError by rememberSaveable { mutableStateOf(false) }
+    var duration by rememberSaveable { mutableStateOf("") }
+    var durationError by rememberSaveable { mutableStateOf(false)}
+    var budget by rememberSaveable { mutableFloatStateOf(0f)}
+    var selectedRange by rememberSaveable { mutableStateOf("Days") }
     val context = LocalContext.current
 
     Column (
@@ -258,7 +259,7 @@ fun DropDown(selectedText: String, onSelectionChange: (String) -> Unit){
         "Month",
         "Year"
     )
-    var isExpanded by remember { mutableStateOf(false) }
+    var isExpanded by rememberSaveable { mutableStateOf(false) }
     Column (
         modifier = Modifier
             .fillMaxWidth(),
